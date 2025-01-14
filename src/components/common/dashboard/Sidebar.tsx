@@ -1,35 +1,28 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import {
-  LayoutDashboard,
-  Calendar,
-  User,
-  Heart,
-  Bell,
-  Settings,
-  LogOut,
-} from 'lucide-react';
-import { logOut } from '../../../firebase/auth';
+import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { LogOut } from "lucide-react";
+import { logOut } from "../../../firebase/auth";
+import { SidebarMenuItem } from "../../../types/SidebarDataTypes";
+import { AdminSection } from "../../../types/AdminTypes";
 
-const menuItems = [
-  { icon: LayoutDashboard, label: 'Overview', path: '/dashboard' },
-  { icon: Calendar, label: 'Appointments', path: '/dashboard/appointments' },
-  { icon: User, label: 'Pet Profile', path: '/dashboard/profile' },
-  { icon: Heart, label: 'Health', path: '/dashboard/health' },
-  { icon: Bell, label: 'Notifications', path: '/dashboard/notifications' },
-  { icon: Settings, label: 'Settings', path: '/dashboard/settings' },
-];
+interface SidebarProps {
+  menuItems: SidebarMenuItem[];
+  currentSection?: AdminSection;
+  setCurrentSection?: (section: AdminSection) => void;
+}
 
-const Sidebar = () => {
+const Sidebar: React.FC<SidebarProps> = ({
+  menuItems,
+  currentSection,
+  setCurrentSection,
+}) => {
   const location = useLocation();
 
   const handleLogout = async () => {
     try {
       await logOut();
-      // Redirect will be handled by the auth state listener
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
@@ -44,15 +37,23 @@ const Sidebar = () => {
       <nav className="flex-1 px-4">
         <ul className="space-y-2">
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive = currentSection
+              ? currentSection === item.label.toLowerCase()
+              : location.pathname === item.path;
             return (
               <li key={item.path}>
-                <Link
-                  to={item.path}
+                <button
+                  onClick={() =>
+                    setCurrentSection
+                      ? setCurrentSection(
+                          item.label.toLowerCase() as AdminSection
+                        )
+                      : null
+                  }
                   className={`flex items-center space-x-3 px-4 py-2.5 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-purple-500/10 text-purple-400'
-                      : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200'
+                      ? "bg-purple-500/10 text-purple-400"
+                      : "text-gray-400 hover:bg-gray-800/50 hover:text-gray-200"
                   }`}
                 >
                   <item.icon className="w-5 h-5" />
@@ -63,7 +64,7 @@ const Sidebar = () => {
                       className="absolute left-0 w-1 h-8 bg-purple-500 rounded-r-full"
                     />
                   )}
-                </Link>
+                </button>
               </li>
             );
           })}
@@ -82,4 +83,5 @@ const Sidebar = () => {
     </div>
   );
 };
+
 export default Sidebar;

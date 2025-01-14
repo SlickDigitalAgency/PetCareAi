@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Bell, Calendar, Heart, AlertCircle } from 'lucide-react';
 
@@ -49,19 +48,16 @@ const Notifications = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className={`p-4 rounded-xl border ${
-              notification.read
-                ? 'bg-gray-800/30 border-gray-700'
-                : 'bg-gray-800/50 border-purple-500/50'
-            }`}
+            className={`p-4 rounded-xl border ${notification.read
+              ? 'bg-gray-800/30 border-gray-700'
+              : 'bg-gray-800/50 border-purple-500/50'
+              }`}
           >
             <div className="flex items-start space-x-4">
-              <div className={`p-2 rounded-full ${
-                notification.read ? 'bg-gray-700' : 'bg-purple-500/20'
-              }`}>
-                <notification.icon className={`w-5 h-5 ${
-                  notification.read ? 'text-gray-400' : 'text-purple-400'
-                }`} />
+              <div className={`p-2 rounded-full ${notification.read ? 'bg-gray-700' : 'bg-purple-500/20'
+                }`}>
+                <notification.icon className={`w-5 h-5 ${notification.read ? 'text-gray-400' : 'text-purple-400'
+                  }`} />
               </div>
               <div className="flex-1">
                 <h3 className="text-white font-semibold">{notification.title}</h3>

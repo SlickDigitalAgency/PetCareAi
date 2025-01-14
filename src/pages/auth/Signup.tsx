@@ -8,6 +8,8 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('customer');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,8 +19,15 @@ const Signup = () => {
     setError('');
     setLoading(true);
 
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
     try {
       await signUp(email, password);
+      // TODO: Save user role to database
       navigate('/dashboard');
     } catch (err) {
       setError('Failed to create account. Please try again.');
@@ -35,18 +44,18 @@ const Signup = () => {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md w-full bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-gray-700"
       >
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-4">
           <PawPrint className="h-12 w-12 text-purple-500" />
         </div>
-        
+
         <h2 className="text-3xl font-bold text-center text-white mb-8">Create Account</h2>
-        
+
         {error && (
           <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500 text-red-500">
             {error}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
@@ -77,7 +86,7 @@ const Signup = () => {
               />
             </div>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-2">Password</label>
             <div className="relative">
@@ -93,7 +102,37 @@ const Signup = () => {
               />
             </div>
           </div>
-          
+
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-2">Confirm Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg py-2 pl-10 pr-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                placeholder="Confirm your password"
+                required
+                minLength={6}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-2">Role</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full bg-gray-700/50 border border-gray-600 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              required
+            >
+              <option value="customer">Customer</option>
+              <option value="serviceProvider">Groomist</option>
+              <option value="serviceProvider">Doctor</option>
+            </select>
+          </div>
+
           <button
             type="submit"
             disabled={loading}
@@ -102,7 +141,7 @@ const Signup = () => {
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
-        
+
         <p className="mt-6 text-center text-gray-400">
           Already have an account?{' '}
           <Link to="/login" className="text-purple-400 hover:text-purple-300">

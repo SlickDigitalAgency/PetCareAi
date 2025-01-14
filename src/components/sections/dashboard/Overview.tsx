@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { Calendar, Heart, Bell, Clock } from 'lucide-react';
 

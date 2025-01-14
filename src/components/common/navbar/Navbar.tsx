@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Menu, X, PawPrint } from 'lucide-react';
-import { NavItem } from '../../../types';
-import { fadeIn } from '../../../utils/animations';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Menu, X, PawPrint, User } from "lucide-react";
+import { NavItem } from "../../../types";
+import { fadeIn } from "../../../utils/animations";
 
 const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.nav 
+    <motion.nav
       initial="initial"
       animate="animate"
       variants={fadeIn}
@@ -56,14 +56,18 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-300 hover:text-white"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -85,7 +89,7 @@ const Navbar = () => {
                 className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
                 onClick={() => setIsOpen(false)}
               >
-                Login
+                <User className="w-5 h-5 mr-2" />
               </Link>
             </div>
           </motion.div>
