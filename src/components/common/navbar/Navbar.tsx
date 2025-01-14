@@ -44,21 +44,21 @@ const Navbar = () => {
             ))}
             <Link
               to="/wishlist"
-              className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+              className="block px-1 py-2 rounded-md  text-white"
               onClick={() => setIsOpen(false)}
             >
-              <Heart className="w-5 h-5 mr-2" />
+              <Heart className="w-5 h-5" />
             </Link>
             <Link
               to="/cart"
-              className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+              className="block px-1 py-2 rounded-md  text-white"
               onClick={() => setIsOpen(false)}
             >
-              <ShoppingCart className="w-5 h-5 mr-2" />
+              <ShoppingCart className="w-5 h-5" />
             </Link>
             <Link
               to="/login"
-              className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90 transition-opacity"
+              className="px-8 py-2 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90 transition-opacity"
             >
               Login
             </Link>

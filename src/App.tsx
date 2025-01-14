@@ -12,6 +12,8 @@ import { auth } from "./firebase/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import Wishlists from "./pages/wishlists/Wishlists";
+import Carts from "./pages/carts/Carts";
 
 function App() {
   const [user, loading] = useAuthState(auth);
@@ -45,7 +47,7 @@ function App() {
     } else {
       setRoleLoading(false);
     }
-  }, [user]); // Added user as a dependency to trigger the effect only when user changes
+  }, [user]);
 
   if (loading || roleLoading) {
     return (
@@ -73,12 +75,13 @@ function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-gray-900">
-        {!user && <Navbar />}
+        {/* Navbar should appear regardless of user login state */}
+        <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={!user ? <Home /> : <Navigate to="/dashboard" />}
-          />
+          {/* Home page is publicly accessible */}
+          <Route path="/" element={<Home />} />
+
+          {/* Login, Signup, and Forgot Password pages are protected */}
           <Route
             path="/login"
             element={!user ? <Login /> : <Navigate to="/dashboard" />}
@@ -91,9 +94,21 @@ function App() {
             path="/forgot-password"
             element={!user ? <ForgetPassword /> : <Navigate to="/dashboard" />}
           />
+
+          {/* Protected dashboard routes */}
           <Route
             path="/dashboard/*"
             element={user ? renderDashboard() : <Navigate to="/login" />}
+          />
+
+          {/* Protected routes for Cart and Wishlist */}
+          <Route
+            path="/cart"
+            element={user ? <Carts /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/wishlist"
+            element={user ? <Wishlists /> : <Navigate to="/login" />}
           />
         </Routes>
       </div>
