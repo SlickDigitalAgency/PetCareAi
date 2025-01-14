@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, PawPrint, User } from "lucide-react";
+import { Menu, X, PawPrint, User, ShoppingCart, Heart } from "lucide-react";
 import { NavItem } from "../../../types";
 import { fadeIn } from "../../../utils/animations";
 
@@ -42,6 +42,20 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/wishlist"
+              className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+              onClick={() => setIsOpen(false)}
+            >
+              <Heart className="w-5 h-5 mr-2" />
+            </Link>
+            <Link
+              to="/cart"
+              className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+              onClick={() => setIsOpen(false)}
+            >
+              <ShoppingCart className="w-5 h-5 mr-2" />
+            </Link>
             <Link
               to="/login"
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:opacity-90 transition-opacity"
@@ -84,6 +98,20 @@ const Navbar = () => {
                   {item.label}
                 </Link>
               ))}
+              <Link
+                to="/wishlist"
+                className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+                onClick={() => setIsOpen(false)}
+              >
+                <Heart className="w-5 h-5 mr-2" />
+              </Link>
+              <Link
+                to="/cart"
+                className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
+                onClick={() => setIsOpen(false)}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+              </Link>
               <Link
                 to="/login"
                 className="block px-3 py-2 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white"
